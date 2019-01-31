@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:background="#D3D3D3"
+        android:layout_weight="3"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+
+
+        <et.ts.layout.music_n_top_layout
+            android:layout_weight="2"
+            android:layout_height="0dp"
+            android:layout_width="match_parent" />
+
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_weight="14"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <RelativeLayout
+            android:layout_weight="0.5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="#D3D3D3"
+            android:gravity="center_horizontal">
+
+            <!--显示当前音量-->
+            <ImageView
+                android:id="@+id/yl_image"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/speaker"
+                />
+
+            <SeekBar
+                android:id="@+id/yl_SeekBar"
+                android:layout_width="230sp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/yl_image"
+                android:layout_weight="1"
+                android:max="100" />
+
+
+        </RelativeLayout>
+
+        <et.ts.view.WordView
+            android:id="@+id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="13"
+            />
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:gravity="center_horizontal">
+
+                        <!--显示当前进度-->
+                        <TextView
+                            android:id="@+id/MusicTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="00:00" />
+
+                        <SeekBar
+                            android:id="@+id/MusicSeekBar"
+                            android:layout_width="230sp"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/MusicTime"
+                            android:layout_weight="1"
+                            android:max="100" />
+
+                        <!--显示总进度-->
+                        <TextView
+                            android:id="@+id/MusicTotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/MusicSeekBar"
+                            android:text="00:00" />
+
+                    </RelativeLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout2"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:background="#D3D3D3"
+                        android:layout_weight="2">
+                        <ImageButton
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/replay"
+                            />
+                        <ImageButton
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:src="@drawable/doubleleft"
+                            android:layout_height="match_parent" />
+                        <ImageButton
+                            android:src="@drawable/play"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent" />
+                        <ImageButton
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:src="@drawable/right"
+                            android:layout_height="match_parent" />
+                        <ImageButton
+                            android:src="@drawable/menu1"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent" />
+
+
+                    </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

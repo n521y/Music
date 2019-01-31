@@ -4,12 +4,24 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.View;
 
+import java.util.List;
+
+
+import et.ts.fragment.MusicGeCi;
+import et.ts.util.LrcHandle;
+import et.ts.view.WordView;
+import et.ts.wyymusic.R;
 
 
 public class MusicService extends Service {
+    private WordView wordView;
+    private List mTimeList;
+    private MusicGeCi musicGeCi;
 
     String [] mMusics=new String[]{
             "/sdcard/wangyiMusic/cd.mp3",
@@ -18,8 +30,6 @@ public class MusicService extends Service {
             "/sdcard/wangyiMusic/cg.mp3",
             "/sdcard/wangyiMusic/ch.mp3"
     };
-
-
     private  int currentMusicId=0;
     private  int myMusicSize=mMusics.length;
 
@@ -50,6 +60,7 @@ public class MusicService extends Service {
             mediaPlayer.pause();
         } else {
             mediaPlayer.start();
+
         }
     }
 

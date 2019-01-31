@@ -21,7 +21,18 @@
             </intent-filter>
         </activity>
 
-        <service android:name="et.ts.service.MusicService" android:enabled="true" android:exported="true"/>
+        <!--<activity android:name=".Music_text">
+            &lt;!&ndash;<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>&ndash;&gt;
+
+        </activity>-->
+
+
+        <service android:name="et.ts.service.MusicService" android:enabled="true" android:exported="true">
+        </service>
     </application>
 
 </manifest>

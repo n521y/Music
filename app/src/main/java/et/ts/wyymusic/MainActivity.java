@@ -13,6 +13,8 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -26,12 +28,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
-
+import java.util.List;
+import et.ts.fragment.MusicQieHuan;
 import et.ts.service.MusicService;
+import et.ts.util.LrcHandle;
+import et.ts.view.WordView;
 
 public class MainActivity extends AppCompatActivity {
+
+
+
+
+    public boolean ab=false;
     private TextView musicStatus, musicTime, musicTotal;
     private SeekBar seekBar;
+
+    private List mTimeList;
+    private WordView wordView;
+    private MusicQieHuan musicQieHuan;
 
     private Button btnPlayOrPause, btnpre,btnnext;
     private SimpleDateFormat time = new SimpleDateFormat("mm:ss");
@@ -39,6 +53,23 @@ public class MainActivity extends AppCompatActivity {
     private boolean tag1 = false;
     private boolean tag2 = false;
     private MusicService musicService;
+
+
+
+    public SeekBar getSeekBar(){
+
+        return seekBar;
+    }
+
+    public MusicService getMusicService(){
+
+        return musicService;
+    }
+
+    public List getMTimeList(){
+
+        return mTimeList;
+    }
 
 
     //  在Activity中调用 bindService 保持与 Service 的通信
@@ -68,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
     public Runnable runnable = new Runnable() {
         @Override
         public void run() {
+
             musicTime.setText(time.format(musicService.mediaPlayer.getCurrentPosition()));
             seekBar.setProgress(musicService.mediaPlayer.getCurrentPosition());
             seekBar.setMax(musicService.mediaPlayer.getDuration());
@@ -77,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
+
 
     private void findViewById() {
         musicTime = (TextView) findViewById(R.id.MusicTime);
@@ -88,6 +122,18 @@ public class MainActivity extends AppCompatActivity {
         btnnext=(Button)findViewById(R.id.music_next);
         btnpre=(Button)findViewById(R.id.music_pre);
         musicStatus = (TextView) findViewById(R.id.MusicStatus);
+        musicQieHuan=new MusicQieHuan();
+        wordView=(WordView)findViewById(R.id.text);
+        LrcHandle lrcHandler = new LrcHandle();
+        lrcHandler.readLRC("/sdcard/wangyiMusic/成都_歌词.lrc");
+        mTimeList = lrcHandler.getTime();
+        }
+
+
+    private void replaceFragment(Fragment fragment){
+        FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.music_detial,fragment);
+        transaction.commit();
 
     }
 
@@ -96,14 +142,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         if(ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
 
             ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
         }else {
 
             findViewById();
+            replaceFragment(musicQieHuan);
             bindServiceConnection();
             myListener();
+
             seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -122,12 +171,17 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
+
+
         }
 
 
 
 
     }
+
+
+
 
     private void myListener() {
         ImageView imageView = (ImageView) findViewById(R.id.Image);
