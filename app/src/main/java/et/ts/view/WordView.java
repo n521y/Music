@@ -31,6 +31,10 @@ public class WordView extends android.support.v7.widget.AppCompatTextView {
         init();
     }
 
+    public void setMyIndex(int mIndex){
+        this.mIndex=mIndex;
+    }
+
     public WordView(Context context, AttributeSet attrs) throws IOException {
         super(context, attrs);
         init();

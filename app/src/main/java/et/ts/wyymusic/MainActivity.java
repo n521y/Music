@@ -1,7 +1,6 @@
 package et.ts.wyymusic;
 
 import android.Manifest;
-import android.animation.ObjectAnimator;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -20,13 +19,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
 import java.util.List;
 import et.ts.fragment.MusicQieHuan;
@@ -42,19 +38,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean ab=false;
     private TextView musicStatus, musicTime, musicTotal;
     private SeekBar seekBar;
-
     private List mTimeList;
     private WordView wordView;
     private MusicQieHuan musicQieHuan;
-
     private Button btnPlayOrPause, btnpre,btnnext;
     private SimpleDateFormat time = new SimpleDateFormat("mm:ss");
-
     private boolean tag1 = false;
     private boolean tag2 = false;
     private MusicService musicService;
-
-
 
     public SeekBar getSeekBar(){
 
@@ -127,6 +118,9 @@ public class MainActivity extends AppCompatActivity {
         LrcHandle lrcHandler = new LrcHandle();
         lrcHandler.readLRC("/sdcard/wangyiMusic/成都_歌词.lrc");
         mTimeList = lrcHandler.getTime();
+        for(int i=0;i<mTimeList.size();i++){
+            Log.d("niu","nnnnnnnnnnnn"+mTimeList.get(i));
+        }
         }
 
 
@@ -149,8 +143,8 @@ public class MainActivity extends AppCompatActivity {
         }else {
 
             findViewById();
-            replaceFragment(musicQieHuan);
             bindServiceConnection();
+            replaceFragment(musicQieHuan);
             myListener();
 
             seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -158,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     if (fromUser == true) {
                         musicService.mediaPlayer.seekTo(progress);
+                        Log.d("niu",""+progress);
                     }
                 }
 
@@ -184,15 +179,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void myListener() {
-        ImageView imageView = (ImageView) findViewById(R.id.Image);
-        final ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "rotation", 0f, 360.0f);
-        animator.setDuration(10000);
-        animator.setInterpolator(new LinearInterpolator());
-        animator.setRepeatCount(-1);
         btnPlayOrPause.setOnClickListener(new View.OnClickListener() {
+
+
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
+                Log.d("niu","musicService.mediaPlayer");
                 if (musicService.mediaPlayer != null) {
                     seekBar.setProgress(musicService.mediaPlayer.getCurrentPosition());
                     seekBar.setMax(musicService.mediaPlayer.getDuration());
@@ -203,18 +196,14 @@ public class MainActivity extends AppCompatActivity {
                     musicStatus.setText("Playing");
                     musicService.playOrPause();
                     musicService.tag = true;
+                    ab=true;
+                    Log.d("niu","musicService.tagr"+tag1);
 
-                    if (tag1 == false) {
-                        animator.start();
-                        tag1 = true;
-                    } else {
-                        animator.resume();
-                    }
                 } else {
                     btnPlayOrPause.setText("PLAY");
                     musicStatus.setText("Paused");
                     musicService.playOrPause();
-                    animator.pause();
+                    ab=false;
                     musicService.tag = false;
                 }
                 if (tag2 == false) {

@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +32,11 @@ private MediaPlayer mediaPlayer;
 private int max,current;
 private AudioManager am;
 private SeekBar mSeekBar;
+private MusicQieHuan musicQieHuan;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        musicQieHuan=new MusicQieHuan();
         activity=(MainActivity)getActivity();
         initYL();
 
@@ -49,6 +53,13 @@ private SeekBar mSeekBar;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.fragment_music_geci,container,false);
+        Log.d("niu","111111111111111111111111111111111111onCreateView");
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         wordView=view.findViewById(R.id.text);
         ylseekBar=view.findViewById(R.id.yl_SeekBar);
         ylseekBar.setProgress(current);
@@ -62,26 +73,23 @@ private SeekBar mSeekBar;
 
             xxx();
         }else {
-            int in=0;
-            for(int i=0;i<=mTimeList.size();i++){
-                int a=(int) mTimeList.get(i);
-                if(mSeekBar.getProgress()>=a){
-                    in=i;
-                    break;
+            int i=0;
+            for(;i<=mTimeList.size();i++){
+                Log.d("niu","mediaPlayer"+mediaPlayer.getCurrentPosition());
+                if((int)mTimeList.get(i)>=mediaPlayer.getCurrentPosition() && (int)mTimeList.get(i-1)<=mediaPlayer.getCurrentPosition()){
+
+
+                   break;
+
                 }
 
             }
-            xbx(in);
 
-
+            xbx(i-1);
+            Log.d("niu",""+i);
         }
+        Log.d("niu","111111111111111111111111111111111111onResume");
 
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         //音量拖动条的监听器
         ylseekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -150,13 +158,15 @@ private SeekBar mSeekBar;
 
 
 
-    private void xbx(final int a){
+    private void xbx(final int ab){
+        wordView.setmIndex(ab);
 
 
         final Handler handler1 = new Handler();
 
         new Thread(new Runnable() {
-            int i =a;
+            int i =ab;
+
 
             @Override
             public void run() {
@@ -185,12 +195,11 @@ private SeekBar mSeekBar;
     }
 
 
-
-
     private View.OnClickListener backListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             getFragmentManager().popBackStack();
         }
     };
+
 }
