@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nly_xiaoxi"
+              android:icon="@mipmap/contact"
+              android:title="我的消息"/>
+
+        <item android:id="@+id/nly_xiaoxi2"
+            android:icon="@mipmap/icon"
+            android:title="我的好友"/>
+
+        <item android:id="@+id/nly_xiaoxi3"
+            android:icon="@mipmap/alarm_clock"
+            android:title="定时停止播放"/>
+
+        <item android:id="@+id/nly_xiaoxi4"
+            android:icon="@mipmap/nearby"
+            android:title="附近的人"/>
+
+        <item android:id="@+id/nly_xiaoxi5"
+            android:icon="@mipmap/moon"
+            android:title="夜间模式"/>
+
+        <item android:id="@+id/nly_xiaoxi6"
+            android:icon="@mipmap/settings"
+            android:title="设置"/>
+
+        <item android:id="@+id/nly_xiaoxi7"
+            android:icon="@mipmap/power_signal"
+            android:title="退出"/>
+
+
+    </group>
+
+</menu>

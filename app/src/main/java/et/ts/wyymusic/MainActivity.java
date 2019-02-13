@@ -1,8 +1,11 @@
 package et.ts.wyymusic;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -15,7 +18,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -23,6 +29,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.text.SimpleDateFormat;
 import java.util.List;
 import et.ts.fragment.MusicQieHuan;
@@ -31,8 +38,6 @@ import et.ts.util.LrcHandle;
 import et.ts.view.WordView;
 
 public class MainActivity extends AppCompatActivity {
-
-
 
 
     public boolean ab=false;
@@ -61,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         return mTimeList;
     }
+
 
 
     //  在Activity中调用 bindService 保持与 Service 的通信
@@ -137,6 +143,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+
+
+
+
+
         if(ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
 
             ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
@@ -174,7 +185,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
 
 
 
