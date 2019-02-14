@@ -21,7 +21,9 @@
         android:layout_gravity="center"
         android:orientation="horizontal">
 
-        <ImageView
+
+
+        <ImageButton
             android:id="@+id/iv_menu1"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
@@ -31,7 +33,7 @@
             android:textColor="@drawable/music_tab_bar_text_color_selector"
             android:src="@mipmap/music_player" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/iv_menu2"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
@@ -40,7 +42,7 @@
             android:scaleType="centerInside"
             android:src="@mipmap/compact_disc" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/iv_menu3"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
