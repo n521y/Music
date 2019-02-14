@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,17 +22,102 @@ import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import et.ts.Decoration.SpacesItemDecoration;
+import et.ts.Listener.OnItemClickListener;
+import et.ts.adapter.RecyclerAdapter;
+import et.ts.bean.Music;
 import et.ts.wyymusic.MainActivity;
 import et.ts.wyymusic.R;
 
-public class ViewPagefragment2 extends Fragment implements OnBannerListener {
+public class ViewPagefragment2 extends Fragment implements OnBannerListener ,OnItemClickListener {
+
+
 
 
     private Banner mBanner;
     private MyImageLoader mMyImageLoader;
     private ArrayList<Integer> imagePath;
     private ArrayList<String> imageTitle;
+
+    private RecyclerView ry;
+    private GridLayoutManager layoutManager;
+    private RecyclerAdapter mAdapter;
+    private static List<Music> mList;
+
+    /**
+     * 模拟本地数据
+     */
+    static {
+        mList = new ArrayList<>();
+
+        for (int i = 0; i < 1; i++) {
+            Music music = new Music();
+            music.type = Music.TYPE.TYPE_TITLE;
+            music.imageId = R.drawable.ic_cover;
+            music.title = "推荐歌单";
+            mList.add(music);
+        }
+
+        for (int i = 0; i < 6; i++) {
+            Music music = new Music();
+            music.type = Music.TYPE.TYPE_GRID_THREE;
+            music.imageId = R.drawable.ic_cover;
+            music.title = "先不要降温！我没钱买衣服";
+            mList.add(music);
+        }
+
+        for (int i = 0; i < 1; i++) {
+            Music music = new Music();
+            music.type = Music.TYPE.TYPE_TITLE;
+            music.imageId = R.drawable.ic_cover;
+            music.title = "推荐MV";
+            mList.add(music);
+        }
+
+        for (int i = 0; i < 4; i++) {
+            Music music = new Music();
+            music.type = Music.TYPE.TYPE_GRID_TWO;
+            music.imageId = R.drawable.ic_cover;
+            music.title = "Perfect Day";
+            mList.add(music);
+        }
+
+        for (int i = 0; i < 1; i++) {
+            Music music = new Music();
+            music.type = Music.TYPE.TYPE_TITLE;
+            music.imageId = R.drawable.ic_cover;
+            music.title = "精选专栏";
+            mList.add(music);
+        }
+
+        for (int i = 0; i < 3; i++) {
+            Music music = new Music();
+            music.type = Music.TYPE.TYPE_LIST;
+            music.imageId = R.drawable.ic_cover;
+            music.title = "去看《银翼杀手2049》前，你应该知道的三件事";
+            mList.add(music);
+        }
+
+        for (int i = 0; i < 1; i++) {
+            Music music = new Music();
+            music.type = Music.TYPE.TYPE_TITLE;
+            music.imageId = R.drawable.ic_cover;
+            music.title = "最新音乐";
+            mList.add(music);
+        }
+
+        for (int i = 0; i < 6; i++) {
+            Music music = new Music();
+            music.type = Music.TYPE.TYPE_GRID_THREE;
+            music.imageId = R.drawable.ic_cover;
+            music.title = "[BGM]一定听过的神级背景配乐";
+            mList.add(music);
+        }
+    }
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,10 +128,38 @@ public class ViewPagefragment2 extends Fragment implements OnBannerListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.viewpage2,container,false);
-
         mBanner = view.findViewById(R.id.banner);
         initData();
         initView();
+        ry=(RecyclerView)view.findViewById(R.id.ry);
+        layoutManager=new GridLayoutManager(view.getContext(),6);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int i) {
+
+                int type=mList.get(i).type;
+                if (type == Music.TYPE.TYPE_GRID_THREE) {
+                    return 2;
+                } else if (type == Music.TYPE.TYPE_GRID_TWO) {
+                    return 3;
+                } else if (type == Music.TYPE.TYPE_LIST) {
+                    return 6;
+                } else if (type == Music.TYPE.TYPE_TITLE) {
+                    return 6;
+                }
+
+                return 0;
+            }
+        });
+
+        ry.setLayoutManager(layoutManager);
+        ry.addItemDecoration(new SpacesItemDecoration(2));
+
+        // 填充数据
+        mAdapter = new RecyclerAdapter(view.getContext(), mList);
+        mAdapter.setOnItemClickListener(this);
+        ry.setAdapter(mAdapter);
+
         Log.d("ymy","ViewPagefragment2");
         return view;
     }
@@ -53,9 +168,9 @@ public class ViewPagefragment2 extends Fragment implements OnBannerListener {
     private void initData() {
         imagePath = new ArrayList<>();
         imageTitle = new ArrayList<>();
-        imagePath.add(R.drawable.ic_or);
-        imagePath.add(R.drawable.ic_or);
-        imagePath.add(R.drawable.ic_or);
+        imagePath.add(R.drawable.ic_timg);
+        imagePath.add(R.drawable.ic_timg1);
+        imagePath.add(R.drawable.ic_timg3);
         imageTitle.add("我是海鸟一号");
         imageTitle.add("我是海鸟二号");
         imageTitle.add("我是海鸟三号");
@@ -94,6 +209,18 @@ public class ViewPagefragment2 extends Fragment implements OnBannerListener {
 
       Log.d("nn","mmmmmmmmmmmmmmmmmmmmm"+position);
     }
+
+
+
+    @Override
+    public void OnItemClick(int position) {
+        String title = mList.get(position).title;
+        Log.d("ymy",""+title);
+
+    }
+
+
+
 
     //图片加载类
     private class MyImageLoader extends ImageLoader {
