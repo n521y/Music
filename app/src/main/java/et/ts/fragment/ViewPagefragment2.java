@@ -1,6 +1,7 @@
 package et.ts.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +33,7 @@ import et.ts.bean.Music;
 import et.ts.ui.NeteasePlaylistActivity;
 import et.ts.util.CommonUtils;
 import et.ts.wyymusic.MainActivity;
+import et.ts.wyymusic.Music_ListActivity;
 import et.ts.wyymusic.R;
 
 public class ViewPagefragment2 extends Fragment implements OnBannerListener ,OnItemClickListener {
@@ -42,6 +45,9 @@ public class ViewPagefragment2 extends Fragment implements OnBannerListener ,OnI
     private MyImageLoader mMyImageLoader;
     private ArrayList<Integer> imagePath;
     private ArrayList<String> imageTitle;
+    //获取fragment2的组件
+    private LinearLayout linearLayout1;
+
 
     private RecyclerView ry;
     private GridLayoutManager layoutManager;
@@ -129,8 +135,38 @@ public class ViewPagefragment2 extends Fragment implements OnBannerListener ,OnI
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.viewpage2,container,false);
+        final View view=inflater.inflate(R.layout.viewpage2,container,false);
         mBanner = view.findViewById(R.id.banner);
+        linearLayout1=view.findViewById(R.id.fragment_page2_1);
+
+
+
+
+
+
+        //每日推介的监听器
+        linearLayout1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(view.getContext(),Music_ListActivity.class);
+
+                Log.d("linearLayout1", "onClick: "+view.getContext());
+                startActivity(intent);
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
         initData();
         initView();
         ry=(RecyclerView)view.findViewById(R.id.ry);
