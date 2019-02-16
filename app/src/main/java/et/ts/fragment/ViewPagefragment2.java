@@ -28,6 +28,8 @@ import et.ts.Decoration.SpacesItemDecoration;
 import et.ts.Listener.OnItemClickListener;
 import et.ts.adapter.RecyclerAdapter;
 import et.ts.bean.Music;
+import et.ts.ui.NeteasePlaylistActivity;
+import et.ts.util.CommonUtils;
 import et.ts.wyymusic.MainActivity;
 import et.ts.wyymusic.R;
 
@@ -159,10 +161,12 @@ public class ViewPagefragment2 extends Fragment implements OnBannerListener ,OnI
         mAdapter = new RecyclerAdapter(view.getContext(), mList);
         mAdapter.setOnItemClickListener(this);
         ry.setAdapter(mAdapter);
-
         Log.d("ymy","ViewPagefragment2");
         return view;
+
     }
+
+
 
 
     private void initData() {
